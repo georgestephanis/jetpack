@@ -1,6 +1,6 @@
 import { Dialog, ProductOffer, TermsOfService } from '@automattic/jetpack-components';
 import { useConnection } from '@automattic/jetpack-connection';
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 import React from 'react';
 import background from './background.svg';
 import illustration from './illustration.png';
@@ -13,7 +13,7 @@ const ConnectionScreen = () => {
 			redirectUri: 'admin.php?page=jetpack-social',
 		} );
 
-	const buttonText = __( 'Get Started', 'jetpack-social' );
+	const buttonText = __( 'Get Started', 'jetpack-publicize-components' );
 
 	return (
 		<Dialog
@@ -23,18 +23,18 @@ const ConnectionScreen = () => {
 					<ProductOffer
 						className={ styles.offer }
 						slug={ 'jetpack-social' }
-						title={ __( 'Jetpack Social', 'jetpack-social' ) }
+						title={ _x( 'Jetpack Social', 'Plugin name', 'jetpack-publicize-components' ) }
 						subTitle={ __(
 							'Share your posts with your social media network and increase your site’s traffic',
-							'jetpack-social'
+							'jetpack-publicize-components'
 						) }
 						features={ [
 							__(
 								'Share to Facebook, Instagram, LinkedIn, Mastodon, Tumblr, Threads, Bluesky, and Nextdoor',
-								'jetpack-social'
+								'jetpack-publicize-components'
 							),
-							__( 'Post to multiple channels at once', 'jetpack-social' ),
-							__( 'Manage all of your channels from a single hub', 'jetpack-social' ),
+							__( 'Post to multiple channels at once', 'jetpack-publicize-components' ),
+							__( 'Manage all of your channels from a single hub', 'jetpack-publicize-components' ),
 						] }
 						isCard={ false }
 						isBundle={ false }
@@ -50,7 +50,7 @@ const ConnectionScreen = () => {
 						}
 						error={
 							registrationError
-								? __( 'An error occurred. Please try again.', 'jetpack-social' )
+								? __( 'An error occurred. Please try again.', 'jetpack-publicize-components' )
 								: null
 						}
 					/>

@@ -1,8 +1,8 @@
-import { hasSocialPaidFeatures } from '@automattic/jetpack-publicize-components';
 import { getMyJetpackUrl, getScriptData } from '@automattic/jetpack-script-data';
 import { createInterpolateElement } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import Logo from './../../logo';
+import { hasSocialPaidFeatures } from '../../../utils';
+import Logo from './logo';
 import styles from './styles.module.scss';
 
 const AdminPageHeader = () => {
@@ -19,7 +19,7 @@ const AdminPageHeader = () => {
 					{ createInterpolateElement(
 						__(
 							'Already have an existing plan or license key? <a>Click here to get started</a>',
-							'jetpack-social'
+							'jetpack-publicize-components'
 						),
 						{
 							a: <a href={ activateLicenseUrl } />,

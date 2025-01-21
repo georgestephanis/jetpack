@@ -1,11 +1,11 @@
 import { Text, Button, useBreakpointMatch } from '@automattic/jetpack-components';
-import { store as socialStore } from '@automattic/jetpack-publicize-components';
 import { getAdminUrl } from '@automattic/jetpack-script-data';
 import { ExternalLink, SelectControl, ToggleControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import React, { useState } from 'react';
+import { store as socialStore } from '../../../../social-store';
 import ToggleSection from '../toggle-section';
 import styles from './styles.module.scss';
 
@@ -86,7 +86,7 @@ const SocialNotesToggle: React.FC< SocialNotesToggleProps > = ( { disabled } ) =
 
 	return (
 		<ToggleSection
-			title={ __( 'Enable Social Notes', 'jetpack-social' ) }
+			title={ __( 'Enable Social Notes', 'jetpack-publicize-components' ) }
 			beta
 			disabled={ isUpdating || disabled }
 			checked={ isEnabled }
@@ -99,7 +99,7 @@ const SocialNotesToggle: React.FC< SocialNotesToggleProps > = ( { disabled } ) =
 			<Text className={ styles.text }>
 				{ __(
 					"Do you want to quickly share what's on your mind? Turn on Social Notes to effortlessly jot down and share quick notes without the need for titles or formatting, enabling swift and spontaneous communication with your followers.",
-					'jetpack-social'
+					'jetpack-publicize-components'
 				) }
 			</Text>
 
@@ -110,40 +110,46 @@ const SocialNotesToggle: React.FC< SocialNotesToggleProps > = ( { disabled } ) =
 				disabled={ isUpdating || ! isEnabled }
 				href={ newNoteUrl }
 			>
-				{ __( 'Create a note', 'jetpack-social' ) }
+				{ __( 'Create a note', 'jetpack-publicize-components' ) }
 			</Button>
 
 			{ isEnabled ? (
 				<div className={ styles[ 'notes-options-wrapper' ] }>
 					<ToggleControl
-						label={ __( 'Append post link', 'jetpack-social' ) }
+						label={ __( 'Append post link', 'jetpack-publicize-components' ) }
 						checked={ appendLink }
 						disabled={ isAppendLinkToggleUpdating || isLinkFormatUpdating || isUpdating }
 						className={ styles.toggle }
 						onChange={ onToggleAppendLink }
-						help={ __( 'Whether to append the post link when sharing a note.', 'jetpack-social' ) }
+						help={ __(
+							'Whether to append the post link when sharing a note.',
+							'jetpack-publicize-components'
+						) }
 						__nextHasNoMarginBottom={ true }
 					/>
 					{ appendLink ? (
 						<SelectControl
-							label={ __( 'Link format', 'jetpack-social' ) }
+							label={ __( 'Link format', 'jetpack-publicize-components' ) }
 							value={ notesConfig.link_format ?? 'full_url' }
 							onChange={ onChangeLinkFormat }
 							disabled={ isLinkFormatUpdating || isUpdating || isAppendLinkToggleUpdating }
 							options={ [
-								{ label: __( 'Full URL', 'jetpack-social' ), value: 'full_url' },
-								{ label: __( 'Shortlink', 'jetpack-social' ), value: 'shortlink' },
+								{ label: __( 'Full URL', 'jetpack-publicize-components' ), value: 'full_url' },
+								{ label: __( 'Shortlink', 'jetpack-publicize-components' ), value: 'shortlink' },
 								{
-									label: __( 'Permashortcitation', 'jetpack-social' ),
+									label: __( 'Permashortcitation', 'jetpack-publicize-components' ),
 									value: 'permashortcitation',
 								},
 							] }
 							help={
 								<span>
-									{ __( 'Format of the link to use when sharing a note.', 'jetpack-social' ) }
+									{ __(
+										'Format of the link to use when sharing a note.',
+										'jetpack-publicize-components'
+									) }
 									&nbsp;
 									<ExternalLink href="https://jetpack.com/redirect/?source=jetpack-social-notes-link-format">
-										{ __( 'Learn more', 'jetpack-social' ) }
+										{ __( 'Learn more', 'jetpack-publicize-components' ) }
 									</ExternalLink>
 								</span>
 							}

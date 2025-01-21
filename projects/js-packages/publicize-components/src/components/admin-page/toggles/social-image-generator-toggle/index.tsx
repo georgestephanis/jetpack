@@ -1,12 +1,10 @@
 import { Button, Text, useBreakpointMatch } from '@automattic/jetpack-components';
-import {
-	SocialImageGeneratorTemplatePickerModal as TemplatePickerModal,
-	store as socialStore,
-} from '@automattic/jetpack-publicize-components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import React from 'react';
+import { store as socialStore } from '../../../../social-store';
+import TemplatePickerModal from '../../../social-image-generator/template-picker/modal';
 import ToggleSection from '../toggle-section';
 import styles from './styles.module.scss';
 
@@ -57,7 +55,7 @@ const SocialImageGeneratorToggle: React.FC< SocialImageGeneratorToggleProps > = 
 				disabled={ isUpdating || ! isEnabled }
 				onClick={ open }
 			>
-				{ __( 'Change default template', 'jetpack-social' ) }
+				{ __( 'Change default template', 'jetpack-publicize-components' ) }
 			</Button>
 		),
 		[ isEnabled, isSmall, isUpdating ]
@@ -65,7 +63,7 @@ const SocialImageGeneratorToggle: React.FC< SocialImageGeneratorToggleProps > = 
 
 	return (
 		<ToggleSection
-			title={ __( 'Enable Social Image Generator', 'jetpack-social' ) }
+			title={ __( 'Enable Social Image Generator', 'jetpack-publicize-components' ) }
 			disabled={ isUpdating || disabled }
 			checked={ isEnabled }
 			onChange={ toggleStatus }
@@ -73,7 +71,7 @@ const SocialImageGeneratorToggle: React.FC< SocialImageGeneratorToggleProps > = 
 			<Text className={ styles.text }>
 				{ __(
 					'When enabled, Social Image Generator will automatically generate social images for your posts. You can use the button below to choose a default template for new posts. This feature is only supported in the block editor.',
-					'jetpack-social'
+					'jetpack-publicize-components'
 				) }
 			</Text>
 			<TemplatePickerModal

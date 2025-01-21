@@ -8,13 +8,13 @@ import {
 	getRedirectUrl,
 	useBreakpointMatch,
 } from '@automattic/jetpack-components';
-import { store as socialStore } from '@automattic/jetpack-publicize-components';
 import { getScriptData } from '@automattic/jetpack-script-data';
 import { Spinner } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useCallback } from 'react';
-import useProductInfo from '../../hooks/use-product-info';
+import useProductInfo from '../../../hooks/use-product-info';
+import { store as socialStore } from '../../../social-store';
 import styles from './styles.module.scss';
 
 const PricingPage = ( { onDismiss = () => {} } = {} ) => {
@@ -35,43 +35,43 @@ const PricingPage = ( { onDismiss = () => {} } = {} ) => {
 	return (
 		<PricingTable
 			showIntroOfferDisclaimer
-			title={ __( 'Write once, post everywhere', 'jetpack-social' ) }
+			title={ __( 'Write once, post everywhere', 'jetpack-publicize-components' ) }
 			items={ [
-				{ name: __( 'Priority support', 'jetpack-social' ) },
-				{ name: __( 'Schedule posting', 'jetpack-social' ) },
+				{ name: __( 'Priority support', 'jetpack-publicize-components' ) },
+				{ name: __( 'Schedule posting', 'jetpack-publicize-components' ) },
 				{
 					name: __(
 						'Share to Facebook, Instagram, LinkedIn, Mastodon, Tumblr, Threads, Bluesky, and Nextdoor',
-						'jetpack-social'
+						'jetpack-publicize-components'
 					),
 				},
-				{ name: __( 'Customize publications', 'jetpack-social' ) },
+				{ name: __( 'Customize publications', 'jetpack-publicize-components' ) },
 				{
-					name: __( 'Recycle content', 'jetpack-social' ),
+					name: __( 'Recycle content', 'jetpack-publicize-components' ),
 					tooltipInfo: __(
 						'Repurpose, reuse or republish already published content.',
-						'jetpack-social'
+						'jetpack-publicize-components'
 					),
 				},
 				{
-					name: __( 'Upload custom images with your posts', 'jetpack-social' ),
+					name: __( 'Upload custom images with your posts', 'jetpack-publicize-components' ),
 				},
 				{
-					name: __( 'Upload videos with your posts', 'jetpack-social' ),
+					name: __( 'Upload videos with your posts', 'jetpack-publicize-components' ),
 				},
 				{
-					name: __( 'Automatically generate images for posts', 'jetpack-social' ),
+					name: __( 'Automatically generate images for posts', 'jetpack-publicize-components' ),
 					tooltipInfo: __(
 						'Automatically create custom images, saving you hours of tedious work.',
-						'jetpack-social'
+						'jetpack-publicize-components'
 					),
 				},
 				{
-					name: __( 'Multi-image sharing', 'jetpack-social' ),
-					tooltipTitle: __( 'Coming soon', 'jetpack-social' ),
+					name: __( 'Multi-image sharing', 'jetpack-publicize-components' ),
+					tooltipTitle: __( 'Coming soon', 'jetpack-publicize-components' ),
 					tooltipInfo: __(
 						'Share multiple images at once on social media platforms.',
-						'jetpack-social'
+						'jetpack-publicize-components'
 					),
 				},
 			] }
@@ -82,7 +82,10 @@ const PricingPage = ( { onDismiss = () => {} } = {} ) => {
 						<ProductPrice
 							price={ productInfo?.v1?.price }
 							offPrice={ productInfo?.v1?.introOffer }
-							legend={ __( 'per month for the first year, then billed yearly', 'jetpack-social' ) }
+							legend={ __(
+								'per month for the first year, then billed yearly',
+								'jetpack-publicize-components'
+							) }
 							currency={ productInfo?.currencyCode }
 							hidePriceFraction
 						/>
@@ -91,12 +94,12 @@ const PricingPage = ( { onDismiss = () => {} } = {} ) => {
 					) }
 					<Button
 						href={ getRedirectUrl( 'jetpack-social-v1-plan-plugin-admin-page', {
-							site: blogID ?? siteSuffix,
+							site: blogID ? blogID.toString() : siteSuffix,
 							query: 'redirect_to=admin.php?page=jetpack-social',
 						} ) }
 						fullWidth
 					>
-						{ __( 'Get Social', 'jetpack-social' ) }
+						{ __( 'Get Social', 'jetpack-publicize-components' ) }
 					</Button>
 				</PricingTableHeader>
 				<PricingTableItem isIncluded />
@@ -107,7 +110,7 @@ const PricingPage = ( { onDismiss = () => {} } = {} ) => {
 				<PricingTableItem isIncluded />
 				<PricingTableItem isIncluded />
 				<PricingTableItem isIncluded />
-				<PricingTableItem isComingSoon />
+				<PricingTableItem isIncluded={ false } isComingSoon />
 			</PricingTableColumn>
 			<PricingTableColumn>
 				<PricingTableHeader>
@@ -123,18 +126,18 @@ const PricingPage = ( { onDismiss = () => {} } = {} ) => {
 						onClick={ hidePricingPage }
 						className={ isLarge && styles.button }
 					>
-						{ __( 'Start for free', 'jetpack-social' ) }
+						{ __( 'Start for free', 'jetpack-publicize-components' ) }
 					</Button>
 				</PricingTableHeader>
-				<PricingTableItem />
+				<PricingTableItem isIncluded={ false } />
 				<PricingTableItem isIncluded />
 				<PricingTableItem isIncluded />
 				<PricingTableItem isIncluded />
 				<PricingTableItem isIncluded />
-				<PricingTableItem />
-				<PricingTableItem />
-				<PricingTableItem />
-				<PricingTableItem />
+				<PricingTableItem isIncluded={ false } />
+				<PricingTableItem isIncluded={ false } />
+				<PricingTableItem isIncluded={ false } />
+				<PricingTableItem isIncluded={ false } />
 			</PricingTableColumn>
 		</PricingTable>
 	);

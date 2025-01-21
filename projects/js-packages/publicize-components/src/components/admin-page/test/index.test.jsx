@@ -1,7 +1,7 @@
-import { SOCIAL_STORE_ID, SOCIAL_STORE_CONFIG } from '@automattic/jetpack-publicize-components';
 import { render, renderHook, screen } from '@testing-library/react';
 import { useSelect, createReduxStore, register } from '@wordpress/data';
 import React from 'react';
+import { SOCIAL_STORE_CONFIG, SOCIAL_STORE_ID } from '../../../social-store';
 import Admin from '../index';
 
 const store = createReduxStore( SOCIAL_STORE_ID, SOCIAL_STORE_CONFIG );

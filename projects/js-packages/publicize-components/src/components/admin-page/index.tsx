@@ -7,29 +7,24 @@ import {
 	GlobalNotices,
 } from '@automattic/jetpack-components';
 import { useConnection } from '@automattic/jetpack-connection';
-import {
-	hasSocialPaidFeatures,
-	store as socialStore,
-	features,
-	getSocialScriptData,
-} from '@automattic/jetpack-publicize-components';
 import { siteHasFeature } from '@automattic/jetpack-script-data';
 import { useSelect } from '@wordpress/data';
 import { useState, useCallback } from '@wordpress/element';
-import React from 'react';
-import PricingPage from '../pricing-page';
-import SocialImageGeneratorToggle from '../social-image-generator-toggle';
-import SocialModuleToggle from '../social-module-toggle';
-import SocialNotesToggle from '../social-notes-toggle';
-import SupportSection from '../support-section';
-import UtmToggle from '../utm-toggle';
-import ConnectionScreen from './../connection-screen';
-import Header from './../header';
-import InfoSection from './../info-section';
-import AdminPageHeader from './header';
+import { store as socialStore } from '../../social-store';
+import { features, getSocialScriptData, hasSocialPaidFeatures } from '../../utils';
+import ConnectionScreen from './connection-screen';
+import Header from './header';
+import InfoSection from './info-section';
+import AdminPageHeader from './page-header';
 import './styles.module.scss';
+import PricingPage from './pricing-page';
+import SupportSection from './support-section';
+import SocialImageGeneratorToggle from './toggles/social-image-generator-toggle';
+import SocialModuleToggle from './toggles/social-module-toggle';
+import SocialNotesToggle from './toggles/social-notes-toggle';
+import UtmToggle from './toggles/utm-toggle';
 
-const Admin = () => {
+const SocialAdminPage = () => {
 	const { isUserConnected, isRegistered } = useConnection();
 	const showConnectionCard = ! isRegistered || ! isUserConnected;
 	const [ forceDisplayPricingPage, setForceDisplayPricingPage ] = useState( false );
@@ -45,7 +40,7 @@ const Admin = () => {
 			showPricingPage: store.shouldShowPricingPage(),
 			isUpdatingJetpackSettings: store.isSavingSocialPluginSettings(),
 		};
-	} );
+	}, [] );
 
 	const pluginVersion = getSocialScriptData().plugin_info.social.version;
 
@@ -99,4 +94,4 @@ const Admin = () => {
 	);
 };
 
-export default Admin;
+export default SocialAdminPage;
