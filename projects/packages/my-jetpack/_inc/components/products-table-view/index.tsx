@@ -1,7 +1,11 @@
+import { useViewportMatch } from '@wordpress/compose';
 import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import { __ } from '@wordpress/i18n';
+import { Icon, chevronRight } from '@wordpress/icons';
 import { useCallback, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAllProducts } from '../../data/products/use-all-products';
+import useAnalytics from '../../hooks/use-analytics';
 import ActionButton from '../action-button';
 import {
 	PRODUCT_TABLE_TITLE,
@@ -30,7 +34,7 @@ import type {
 	Operator,
 	Option,
 } from '@wordpress/dataviews';
-import type { FC } from 'react';
+import type { FC, MouseEvent } from 'react';
 
 import './style.scss';
 
@@ -100,6 +104,9 @@ const ProductsTableView: FC< ProductsTableViewProps > = ( { products } ) => {
 	}, [] );
 	const isItemClickable = useCallback( () => false, [] );
 	const allProductData = useAllProducts();
+	const isMobileViewport: boolean = useViewportMatch( 'medium', '<' );
+	const navigate = useNavigate();
+	const { recordEvent } = useAnalytics();
 
 	const baseView: ViewList = {
 		sort: {
@@ -125,6 +132,15 @@ const ProductsTableView: FC< ProductsTableViewProps > = ( { products } ) => {
 	const categories = useMemo(
 		() => getCategories( products, allProductData ),
 		[ products, allProductData ]
+	);
+
+	const navigateToInterstitial = useCallback(
+		( slug: string ) => ( event: MouseEvent< HTMLButtonElement > ) => {
+			event.preventDefault();
+			recordEvent( `jetpack_myjetpack_product_list_item_${ slug }_learnmore_mobile_click` );
+			navigate( `add-${ slug }` );
+		},
+		[ navigate, recordEvent ]
 	);
 
 	const fields = useMemo( () => {
@@ -177,8 +193,8 @@ const ProductsTableView: FC< ProductsTableViewProps > = ( { products } ) => {
 				enableHiding: false,
 				render( { item }: { item: ProductData } ) {
 					const { product } = item;
-					const Icon = PRODUCT_ICONS[ product.slug ];
-					return <Icon />;
+					const ProductIcon = PRODUCT_ICONS[ product.slug ];
+					return <ProductIcon />;
 				},
 			},
 			{
@@ -193,7 +209,24 @@ const ProductsTableView: FC< ProductsTableViewProps > = ( { products } ) => {
 					const { product } = item;
 					const { slug } = product;
 
-					return <ActionButton slug={ slug } tracksIdentifier="product_list_item" />;
+					if ( isMobileViewport ) {
+						return (
+							<button
+								onClick={ navigateToInterstitial( slug ) }
+								className="product-list-item-chevron"
+							>
+								<Icon icon={ chevronRight } size={ 24 } />
+							</button>
+						);
+					}
+
+					return (
+						<ActionButton
+							className="product-list-item-cta"
+							slug={ slug }
+							tracksIdentifier="product_list_item"
+						/>
+					);
 				},
 			},
 		];
@@ -201,7 +234,7 @@ const ProductsTableView: FC< ProductsTableViewProps > = ( { products } ) => {
 		// and a 'jumping' of the CTA buttons. Having categories as a dependency here is unnecessary
 		// and leaving it out doesn't cause the values to be incorrect.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [] );
+	}, [ isMobileViewport, navigateToInterstitial ] );
 
 	const [ view, setView ] = useState< View >( {
 		type: 'list',
