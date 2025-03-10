@@ -1,13 +1,10 @@
 /**
  * External dependencies
  */
+import { Button } from '@wordpress/components';
 import { useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
-/**
- * Internal dependencies
- */
-import { isWpcom } from '../util';
 
 const CSVExport = ( { onExport } ) => {
 	const downloadCSV = useCallback( () => {
@@ -28,9 +25,7 @@ const CSVExport = ( { onExport } ) => {
 		} );
 	}, [ onExport ] );
 
-	const buttonClasses = clsx( 'button', 'export-button', 'export-csv', {
-		'button-primary': ! isWpcom(),
-	} );
+	const buttonClasses = clsx( 'button', 'export-button', 'export-csv' );
 
 	return (
 		<div className="jp-forms__export-modal-card">
@@ -58,9 +53,9 @@ const CSVExport = ( { onExport } ) => {
 					{ __( 'Download your form response data as a CSV file.', 'jetpack-forms' ) }
 				</div>
 				<div className="jp-forms__export-modal-card-body-cta">
-					<button className={ buttonClasses } onClick={ downloadCSV }>
+					<Button variant="primary" className={ buttonClasses } onClick={ downloadCSV }>
 						{ __( 'Download', 'jetpack-forms' ) }
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>
