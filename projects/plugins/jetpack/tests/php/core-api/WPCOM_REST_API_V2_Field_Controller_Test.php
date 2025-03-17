@@ -29,7 +29,7 @@ class Example_WPCOM_REST_API_V2_Field_Controller extends WPCOM_REST_API_V2_Field
 class WPCOM_REST_API_V2_Field_Controller_Test extends WP_UnitTestCase {
 	use \Automattic\Jetpack\PHPUnit\WP_UnitTestCase_Fix;
 
-	public function provide_type_defaults() {
+	public static function provide_type_defaults() {
 		return array(
 			'string'                  => array( 'string', '' ),
 			'integer'                 => array( 'integer', 0 ),

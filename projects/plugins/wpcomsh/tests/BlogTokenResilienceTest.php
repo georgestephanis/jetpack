@@ -46,7 +46,7 @@ class BlogTokenResilienceTest extends WP_UnitTestCase {
 	 *
 	 * @return array
 	 */
-	public function get_blog_token_data() {
+	public static function get_blog_token_data() {
 		return array(
 			'empty'           => array(
 				null,
