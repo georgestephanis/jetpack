@@ -1,7 +1,8 @@
-import { Text } from '@automattic/jetpack-components';
+import { TermsOfService, Text } from '@automattic/jetpack-components';
 import { __ } from '@wordpress/i18n';
 import preventWidows from '../../../utils/prevent-widows';
 import styles from './connection-form.module.scss';
+import EmailInput from './email-input';
 import SocialButton from './social-button';
 
 const Separator = () => {
@@ -29,7 +30,7 @@ const ConnectionForm = () => {
 				{ preventWidows( socialConnectionTitle ) }
 			</Text>
 
-			<Text variant="body" mb={ 3 } className={ styles.description }>
+			<Text variant="body" className={ styles.description }>
 				{ preventWidows( socialConnectionDescription ) }
 			</Text>
 
@@ -39,6 +40,10 @@ const ConnectionForm = () => {
 			<SocialButton service="jetpack" />
 
 			<Separator />
+
+			<EmailInput isDisabled={ false } />
+
+			<TermsOfService isTextOnly={ true } className={ styles.tos } />
 		</div>
 	);
 };
