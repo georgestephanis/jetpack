@@ -95,7 +95,7 @@
 
 		&.is-primary {
 			background: $black;
-			color: white;
+			color: #fff;
 			border: 1.5px solid $black;
 
 			&:last-child {
@@ -113,5 +113,5 @@
 	font-size: 9px;
 	font-weight: 700;
 	cursor: pointer;
-	color: #ffffff;
+	color: #fff;
 }
