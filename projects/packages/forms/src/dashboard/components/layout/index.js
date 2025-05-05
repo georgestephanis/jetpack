@@ -39,9 +39,12 @@ const Layout = ( { className, showFooter } ) => {
 			if ( ! tabName ) {
 				tabName = config( 'hasFeedback' ) ? 'responses' : 'about';
 			}
-			navigate( `/${ tabName }` );
+			navigate( {
+				pathname: `/${ tabName }`,
+				search: tabName === 'responses' ? location.search : '',
+			} );
 		},
-		[ navigate ]
+		[ navigate, location.search ]
 	);
 
 	return (
