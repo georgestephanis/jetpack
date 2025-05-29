@@ -17,9 +17,10 @@ class Jetpack_Top_Posts_Helper {
 	 * @param int    $period       Period of days to draw stats from.
 	 * @param int    $items_count  Optional. Number of items to display.
 	 * @param string $types        Optional. Content types to include.
+	 * @param bool   $cached       Optional. Whether to allow caching the result in a transient and serving that back.
 	 * @return array
 	 */
-	public static function get_top_posts( $period, $items_count = null, $types = null ) {
+	public static function get_top_posts( $period, $items_count = null, $types = null, $cached = true ) {
 		$all_time_days = floor( ( time() - strtotime( get_option( 'site_created_date' ) ) ) / ( YEAR_IN_SECONDS ) );
 
 		// While we only display ten posts, users can filter out content types.
@@ -37,6 +38,12 @@ class Jetpack_Top_Posts_Helper {
 			'num'       => $period !== 'all-time' ? $period : $all_time_days,
 			'period'    => 'day',
 		);
+
+		// Use a transient key that should be unique based on the query and accepted types.
+		$transient_key = 'jp_top_posts_' . md5( serialize( array_merge( $query_args, $types ) ) );
+		if ( $cached && false !== ( $top_posts = get_transient( $transient_key ) ) ) {
+			return $top_posts;
+		}
 
 		// Atomic or self-hosted sites via WPCOM public v1.1 endpoint.
 		if ( ! defined( 'IS_WPCOM' ) || ! IS_WPCOM ) {
@@ -135,6 +142,10 @@ class Jetpack_Top_Posts_Helper {
 			);
 
 			$top_posts = array_slice( $top_posts, 0, $items_count );
+		}
+
+		if ( $cached ) {
+			set_transient( $transient_key, $top_posts, DAY_IN_SECONDS );
 		}
 
 		return $top_posts;
