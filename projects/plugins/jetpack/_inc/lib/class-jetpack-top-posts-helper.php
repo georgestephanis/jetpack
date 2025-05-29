@@ -20,7 +20,7 @@ class Jetpack_Top_Posts_Helper {
 	 * @return array
 	 */
 	public static function get_top_posts( $period, $items_count = null, $types = null ) {
-		$all_time_days = floor( ( time() - strtotime( get_option( 'site_created_date' ) ) ) / ( 60 * 60 * 24 * 365 ) );
+		$all_time_days = floor( ( time() - strtotime( get_option( 'site_created_date' ) ) ) / ( YEAR_IN_SECONDS ) );
 
 		// While we only display ten posts, users can filter out content types.
 		// As such, we should obtain a few spare posts from the Stats endpoint.
