@@ -40,8 +40,9 @@ class Jetpack_Top_Posts_Helper {
 		);
 
 		// Use a transient key that should be unique based on the query and accepted types.
-		$transient_key = 'jp_top_posts_' . md5( serialize( array_merge( $query_args, $types ) ) );
-		if ( $cached && false !== ( $top_posts = get_transient( $transient_key ) ) ) {
+		$transient_key = 'jp_top_posts_' . md5( wp_json_encode( $query_args ) . $types );
+		$top_posts     = get_transient( $transient_key );
+		if ( $cached && false !== $top_posts ) {
 			return $top_posts;
 		}
 
